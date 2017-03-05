@@ -75,8 +75,7 @@
 
 - (void)showPhotoBrowserWithTap:(UITapGestureRecognizer *)tap
 {
-    ZKPhotoBrowser *browser = [[ZKPhotoBrowser alloc] initWithImageUrls:self.urls currentPhotoIndex:tap.view.tag sourceSuperView:_contentView];
-    [browser show];
+    [ZKPhotoBrowser showWithImageUrls:self.urls currentPhotoIndex:tap.view.tag sourceSuperView:_contentView];
 }
 
 #pragma mark - Lazy Loading

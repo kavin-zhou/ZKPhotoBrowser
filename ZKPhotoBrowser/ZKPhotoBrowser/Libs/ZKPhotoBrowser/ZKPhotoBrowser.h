@@ -25,8 +25,8 @@
  * superView: 盛放当前图片 imageView 视图的父视图
  *
  */
-- (instancetype)initWithImageUrls:(NSArray<NSString *> *)imageUrls currentPhotoIndex:(NSUInteger)index sourceSuperView:(UIView *)superView;
-
-- (void)show;
++ (instancetype)showWithImageUrls:(NSArray<NSString *> *)imageUrls
+                currentPhotoIndex:(NSUInteger)index
+                  sourceSuperView:(UIView *)superView;
 
 @end

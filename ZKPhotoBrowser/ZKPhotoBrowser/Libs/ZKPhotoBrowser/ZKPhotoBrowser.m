@@ -52,6 +52,14 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
     [self setupToolbar];
 }
 
++ (instancetype)showWithImageUrls:(NSArray<NSString *> *)imageUrls
+                currentPhotoIndex:(NSUInteger)index
+                  sourceSuperView:(UIView *)superView {
+    ZKPhotoBrowser *browser = [[ZKPhotoBrowser alloc] initWithImageUrls:imageUrls currentPhotoIndex:index sourceSuperView:superView];
+    [browser show];
+    return browser;
+}
+
 - (void)show
 {
     [KeyWindow addSubview:self.view];
