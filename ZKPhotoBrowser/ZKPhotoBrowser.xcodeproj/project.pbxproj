@@ -32,7 +32,6 @@
 		5800E32E1D3DF9B500D1F4D2 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5800E3141D3DF9B500D1F4D2 /* UIView+WebCacheOperation.m */; };
 		5800E3311D3DF9F800D1F4D2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5800E3301D3DF9F800D1F4D2 /* ViewController.m */; };
 		586508B61E6BBC1600BA351C /* SDWebImageManager+ZK.m in Sources */ = {isa = PBXBuildFile; fileRef = 586508A61E6BBC1600BA351C /* SDWebImageManager+ZK.m */; };
-		586508B71E6BBC1600BA351C /* UIImageView+ZKWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 586508A81E6BBC1600BA351C /* UIImageView+ZKWebCache.m */; };
 		586508B81E6BBC1600BA351C /* ZKPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 586508A91E6BBC1600BA351C /* ZKPhotoBrowser.bundle */; };
 		586508B91E6BBC1600BA351C /* ZKPhotoLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 586508AB1E6BBC1600BA351C /* ZKPhotoLoadingView.m */; };
 		586508BA1E6BBC1600BA351C /* ZKPhotoProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 586508AD1E6BBC1600BA351C /* ZKPhotoProgressView.m */; };
@@ -40,6 +39,8 @@
 		586508BC1E6BBC1600BA351C /* ZKPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 586508B11E6BBC1600BA351C /* ZKPhotoBrowser.m */; };
 		586508BD1E6BBC1600BA351C /* ZKPhotoToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 586508B31E6BBC1600BA351C /* ZKPhotoToolbar.m */; };
 		586508BE1E6BBC1600BA351C /* ZKPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 586508B51E6BBC1600BA351C /* ZKPhotoView.m */; };
+		586508C21E6BBE4F00BA351C /* NSString+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 586508C11E6BBE4F00BA351C /* NSString+Common.m */; };
+		586508C51E6BBF1300BA351C /* UIImage+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 586508C41E6BBF1300BA351C /* UIImage+Common.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,8 +113,6 @@
 		5800E3301D3DF9F800D1F4D2 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		586508A51E6BBC1600BA351C /* SDWebImageManager+ZK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SDWebImageManager+ZK.h"; sourceTree = "<group>"; };
 		586508A61E6BBC1600BA351C /* SDWebImageManager+ZK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SDWebImageManager+ZK.m"; sourceTree = "<group>"; };
-		586508A71E6BBC1600BA351C /* UIImageView+ZKWebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+ZKWebCache.h"; sourceTree = "<group>"; };
-		586508A81E6BBC1600BA351C /* UIImageView+ZKWebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+ZKWebCache.m"; sourceTree = "<group>"; };
 		586508A91E6BBC1600BA351C /* ZKPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZKPhotoBrowser.bundle; sourceTree = "<group>"; };
 		586508AA1E6BBC1600BA351C /* ZKPhotoLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZKPhotoLoadingView.h; sourceTree = "<group>"; };
 		586508AB1E6BBC1600BA351C /* ZKPhotoLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZKPhotoLoadingView.m; sourceTree = "<group>"; };
@@ -127,6 +126,10 @@
 		586508B31E6BBC1600BA351C /* ZKPhotoToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZKPhotoToolbar.m; sourceTree = "<group>"; };
 		586508B41E6BBC1600BA351C /* ZKPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZKPhotoView.h; sourceTree = "<group>"; };
 		586508B51E6BBC1600BA351C /* ZKPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZKPhotoView.m; sourceTree = "<group>"; };
+		586508C01E6BBE4F00BA351C /* NSString+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Common.h"; sourceTree = "<group>"; };
+		586508C11E6BBE4F00BA351C /* NSString+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Common.m"; sourceTree = "<group>"; };
+		586508C31E6BBF1300BA351C /* UIImage+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Common.h"; sourceTree = "<group>"; };
+		586508C41E6BBF1300BA351C /* UIImage+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Common.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +183,7 @@
 				5800E21B1D3DCF3100D1F4D2 /* AppDelegate.h */,
 				5800E21C1D3DCF3100D1F4D2 /* AppDelegate.m */,
 				5800E2DC1D3DF9B500D1F4D2 /* Classes */,
+				586508BF1E6BBE2B00BA351C /* Common */,
 				5800E2ED1D3DF9B500D1F4D2 /* Libs */,
 				5800E2181D3DCF3100D1F4D2 /* Supporting Files */,
 			);
@@ -304,8 +308,6 @@
 			children = (
 				586508A51E6BBC1600BA351C /* SDWebImageManager+ZK.h */,
 				586508A61E6BBC1600BA351C /* SDWebImageManager+ZK.m */,
-				586508A71E6BBC1600BA351C /* UIImageView+ZKWebCache.h */,
-				586508A81E6BBC1600BA351C /* UIImageView+ZKWebCache.m */,
 				586508A91E6BBC1600BA351C /* ZKPhotoBrowser.bundle */,
 				586508AA1E6BBC1600BA351C /* ZKPhotoLoadingView.h */,
 				586508AB1E6BBC1600BA351C /* ZKPhotoLoadingView.m */,
@@ -313,6 +315,17 @@
 				586508AD1E6BBC1600BA351C /* ZKPhotoProgressView.m */,
 			);
 			path = Supporting;
+			sourceTree = "<group>";
+		};
+		586508BF1E6BBE2B00BA351C /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				586508C01E6BBE4F00BA351C /* NSString+Common.h */,
+				586508C11E6BBE4F00BA351C /* NSString+Common.m */,
+				586508C31E6BBF1300BA351C /* UIImage+Common.h */,
+				586508C41E6BBF1300BA351C /* UIImage+Common.m */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -455,18 +468,19 @@
 				586508BB1E6BBC1600BA351C /* ZKPhoto.m in Sources */,
 				5800E3241D3DF9B500D1F4D2 /* SDWebImageDownloaderOperation.m in Sources */,
 				5800E31E1D3DF9B500D1F4D2 /* MKAnnotationView+WebCache.m in Sources */,
+				586508C21E6BBE4F00BA351C /* NSString+Common.m in Sources */,
 				586508BA1E6BBC1600BA351C /* ZKPhotoProgressView.m in Sources */,
 				586508BE1E6BBC1600BA351C /* ZKPhotoView.m in Sources */,
 				5800E3211D3DF9B500D1F4D2 /* SDWebImageCompat.m in Sources */,
 				5800E32C1D3DF9B500D1F4D2 /* UIImageView+HighlightedWebCache.m in Sources */,
 				5800E21D1D3DCF3100D1F4D2 /* AppDelegate.m in Sources */,
 				5800E21A1D3DCF3100D1F4D2 /* main.m in Sources */,
+				586508C51E6BBF1300BA351C /* UIImage+Common.m in Sources */,
 				5800E3291D3DF9B500D1F4D2 /* UIImage+GIF.m in Sources */,
 				5800E32A1D3DF9B500D1F4D2 /* UIImage+MultiFormat.m in Sources */,
 				5800E3231D3DF9B500D1F4D2 /* SDWebImageDownloader.m in Sources */,
 				586508B91E6BBC1600BA351C /* ZKPhotoLoadingView.m in Sources */,
 				5800E3271D3DF9B500D1F4D2 /* SDWebImagePrefetcher.m in Sources */,
-				586508B71E6BBC1600BA351C /* UIImageView+ZKWebCache.m in Sources */,
 				586508BD1E6BBC1600BA351C /* ZKPhotoToolbar.m in Sources */,
 				5800E3221D3DF9B500D1F4D2 /* SDWebImageDecoder.m in Sources */,
 				5800E32D1D3DF9B500D1F4D2 /* UIImageView+WebCache.m in Sources */,

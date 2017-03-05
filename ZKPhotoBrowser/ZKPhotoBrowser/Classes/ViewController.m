@@ -7,8 +7,10 @@
 //
 
 #import "ViewController.h"
-#import "UIImageView+ZKWebCache.h"
 #import "ZKPhotoBrowser.h"
+#import "NSString+Common.h"
+#import "UIImage+Common.h"
+#import "UIImageView+WebCache.h"
 
 @interface ViewController ()
 
@@ -39,9 +41,7 @@
 - (void)setupUI
 {
     [self setupScrollView];
-    
-    // 1.创建9个UIImageView
-    UIImage *placeholder = [UIImage imageNamed:@"timeline_image_loading.png"];
+    UIImage *placeholder = [UIImage zk_imageWithColor:[UIColor lightGrayColor]];
     CGFloat width = 70;
     CGFloat height = 70;
     CGFloat margin = 10;
@@ -50,22 +50,19 @@
     for (int i = 0; i<9; i++) {
         UIImageView *imageView = [[UIImageView alloc] init];
         [_contentView addSubview:imageView];
-        // 计算位置
         int row    = i/3;
         int column = i%3;
         CGFloat x = startX + column * (width + margin);
         CGFloat y = startY + row * (height + margin);
         imageView.frame = CGRectMake(x, y, width, height);
         
-        // 下载图片
-        [imageView setImageURLStr:self.urls[i] placeholder:placeholder];
+        NSString *imageStr = [self.urls[i] zk_fullThumbImageURLWithMinPixel:150];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:placeholder];
         
-        // 事件监听
         imageView.tag = i;
         imageView.userInteractionEnabled = YES;
         [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
         
-        // 内容模式
         imageView.clipsToBounds = YES;
         imageView.contentMode = UIViewContentModeScaleAspectFill;
     }
