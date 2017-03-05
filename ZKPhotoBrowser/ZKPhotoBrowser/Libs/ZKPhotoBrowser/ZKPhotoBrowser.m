@@ -97,6 +97,23 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
 }
 
 #pragma mark - 公共方法
+- (instancetype)initWithImageUrls:(NSArray<NSString *> *)imageUrls currentPhotoIndex:(NSUInteger)index sourceSuperView:(UIView *)superView {
+    NSInteger count = imageUrls.count;
+    NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
+    for (int i = 0; i < count; i ++) {
+        ZKPhoto *photo = [[ZKPhoto alloc] init];
+        photo.url = [NSURL URLWithString:imageUrls[i]];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class == %@", [UIImageView class]];
+        NSArray *tempArray = [[NSArray alloc] init];
+        tempArray = [superView.subviews filteredArrayUsingPredicate:predicate];
+        
+        photo.srcImageView = tempArray[i];
+        [photos addObject:photo];
+    }
+    return [self initWithPhotos:photos currentPhotoIndex:index];
+}
+
 - (instancetype)initWithPhotos:(NSArray <ZKPhoto *> *)photos currentPhotoIndex:(NSUInteger)index
 {
     NSEnumerator *subEnum = [KeyWindow.rootViewController.childViewControllers reverseObjectEnumerator];
@@ -270,6 +287,10 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
     if ([self.delegate respondsToSelector:@selector(photoBrowser:didChangedToPageAtIndex:)]) {
         [_delegate photoBrowser:self didChangedToPageAtIndex:_currentPhotoIndex];
     }
+}
+
+- (void)dealloc {
+    NSLog(@"析构 %@", NSStringFromClass([self class]));
 }
 
 @end

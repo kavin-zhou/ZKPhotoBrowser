@@ -10,6 +10,7 @@
 #import "ZKPhotoLoadingView.h"
 #import "UIImageView+WebCache.h"
 #import <QuartzCore/QuartzCore.h>
+//#import "USActionSheet.h"
 
 @interface ZKPhotoView ()
 
@@ -58,6 +59,10 @@
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
     doubleTap.numberOfTapsRequired = 2;
     [self addGestureRecognizer:doubleTap];
+    
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+    longPress.minimumPressDuration = .5;
+    [self addGestureRecognizer:longPress];
 }
 
 #pragma mark - photoSetter
@@ -294,6 +299,17 @@
     zoomRect.origin.y    = touchPoint.y - ((zoomRect.size.height / 2.0));
     
     return zoomRect;
+}
+
+- (void)handleLongPress:(UILongPressGestureRecognizer *)longPress {
+    if (!(longPress.state == UIGestureRecognizerStateBegan)) {
+        return;
+    }
+    
+//    USActionSheet *sheet = [USActionSheet initWithOtherButtonTitles:@"保存到相册", nil];
+//    [sheet showWithCompletionBlock:^(NSInteger buttonIndex) {
+//        
+//    }];
 }
 
 - (void)dealloc

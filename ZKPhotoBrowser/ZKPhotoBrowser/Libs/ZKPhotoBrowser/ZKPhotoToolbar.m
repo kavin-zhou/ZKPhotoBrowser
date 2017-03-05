@@ -7,7 +7,6 @@
 
 #import "ZKPhotoToolbar.h"
 #import "ZKPhoto.h"
-#import "MBProgressHUD.h"
 
 @interface ZKPhotoToolbar()
 
@@ -56,33 +55,33 @@
 {
     if (error) {
         // 快速显示一个提示信息
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-        hud.label.text = @"保存失败";
-        // 设置图片
-        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"ZKPhotoBrowser.bundle/%@", @"error"]]];
-        // 再设置模式
-        hud.mode = MBProgressHUDModeCustomView;
-        
-        // 隐藏时候从父控件中移除
-        hud.removeFromSuperViewOnHide = YES;
-        
-        [hud hideAnimated:YES afterDelay:0.7];
+//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+//        hud.label.text = @"保存失败";
+//        // 设置图片
+//        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"ZKPhotoBrowser.bundle/%@", @"error"]]];
+//        // 再设置模式
+//        hud.mode = MBProgressHUDModeCustomView;
+//        
+//        // 隐藏时候从父控件中移除
+//        hud.removeFromSuperViewOnHide = YES;
+//        
+//        [hud hideAnimated:YES afterDelay:0.7];
         
     } else {
         ZKPhoto *photo = _photos[_currentPhotoIndex];
         photo.save = YES;
         _saveImageBtn.enabled = NO;
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-        hud.label.text = @"成功保存到相册";
-        // 设置图片
-        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"ZKPhotoBrowser.bundle/%@", @"success"]]];
-        // 再设置模式
-        hud.mode = MBProgressHUDModeCustomView;
-        
-        // 隐藏时候从父控件中移除
-        hud.removeFromSuperViewOnHide = YES;
-        
-        [hud hideAnimated:YES afterDelay:0.7];
+//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+//        hud.label.text = @"成功保存到相册";
+//        // 设置图片
+//        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"ZKPhotoBrowser.bundle/%@", @"success"]]];
+//        // 再设置模式
+//        hud.mode = MBProgressHUDModeCustomView;
+//        
+//        // 隐藏时候从父控件中移除
+//        hud.removeFromSuperViewOnHide = YES;
+//        
+//        [hud hideAnimated:YES afterDelay:0.7];
     }
 }
 

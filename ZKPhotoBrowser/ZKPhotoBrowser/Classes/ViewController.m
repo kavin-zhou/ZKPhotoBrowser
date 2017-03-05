@@ -78,25 +78,7 @@
 
 - (void)showPhotoBrowserWithTap:(UITapGestureRecognizer *)tap
 {
-    NSInteger count = self.urls.count;
-    // 1.封装图片数据
-    NSMutableArray <ZKPhoto *> *photos = [NSMutableArray arrayWithCapacity:count];
-    for (int i = 0; i<count; i++) {
-        // 替换为大尺寸图片 中:bmiddle  大:large
-        NSString *url = [_urls[i] stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"large"];
-        ZKPhoto *photo = [[ZKPhoto alloc] init];
-        photo.url = [NSURL URLWithString:url]; // 图片路径
-        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class == %@", [UIImageView class]];
-        NSArray *tempArray = [[NSArray alloc] init];
-        tempArray = [_contentView.subviews filteredArrayUsingPredicate:predicate];
-        
-        photo.srcImageView = tempArray[i]; // 来源于哪个UIImageView
-        [photos addObject:photo];
-    }
-    
-    // 2.显示相册
-    ZKPhotoBrowser *browser = [[ZKPhotoBrowser alloc] initWithPhotos:photos currentPhotoIndex:tap.view.tag];
+    ZKPhotoBrowser *browser = [[ZKPhotoBrowser alloc] initWithImageUrls:self.urls currentPhotoIndex:tap.view.tag sourceSuperView:_contentView];
     [browser show];
 }
 
@@ -104,15 +86,14 @@
 - (NSArray<NSString *> *)urls
 {
     if (!_urls) {
-        _urls = @[@"http://ww4.sinaimg.cn/thumbnail/7f8c1087gw1e9g06pc68ug20ag05y4qq.gif",
-                  @"http://ww3.sinaimg.cn/thumbnail/8e88b0c1gw1e9lpr0nly5j20pf0gygo6.jpg",
-                  @"http://ww4.sinaimg.cn/thumbnail/8e88b0c1gw1e9lpr1d0vyj20pf0gytcj.jpg",
-                  @"http://ww3.sinaimg.cn/thumbnail/8e88b0c1gw1e9lpr1xydcj20gy0o9q6s.jpg",
-                  @"http://ww2.sinaimg.cn/thumbnail/8e88b0c1gw1e9lpr2n1jjj20gy0o9tcc.jpg",
-                  @"http://ww2.sinaimg.cn/thumbnail/8e88b0c1gw1e9lpr39ht9j20gy0o6q74.jpg",
-                  //@"http://ww3.sinaimg.cn/thumbnail/8e88b0c1gw1e9lpr3xvtlj20gy0obadv.jpg",
-                  //@"http://ww4.sinaimg.cn/thumbnail/8e88b0c1gw1e9lpr4nndfj20gy0o9q6i.jpg",
-                  @"http://ww3.sinaimg.cn/thumbnail/8e88b0c1gw1e9lpr57tn9j20gy0obn0f.jpg",
+        _urls = @[
+                  @"http://images.himoca.com/dynamic/96/6c/b34c49c4df71895ee4e8ef93df25574b.jpg",
+                  @"http://images.himoca.com/dynamic/96/6c/5c9cfeda773002e4347d0287015030f6.jpg",
+                  @"http://images.himoca.com/dynamic/98/90/6096b7c7013c7423c09d0158daf1a181.jpg",
+                  @"http://images.himoca.com/dynamic/96/6c/75309ab952a33ed418cd18b47b14bada.jpg",
+                  @"http://images.himoca.com/dynamic/96/6c/f7e9dbd226d0281e7451ac8bf5008df8.jpg",
+                  @"http://images.himoca.com/dynamic/96/6c/f02117b77b8a954df4cb09e2ce347f52.jpg",
+                  @"http://images.himoca.com/dynamic/96/6c/7f16d678488c87d369f11bff032f7f88.jpg",
                   @"http://images.himoca.com/dynamic/db/77/13da5b006642a5a95c512cb528058dff.jpg",
                   @"http://images.himoca.com/dynamic/db/77/29b553b49130570391d9288ef09dc39b.jpg"];
     }

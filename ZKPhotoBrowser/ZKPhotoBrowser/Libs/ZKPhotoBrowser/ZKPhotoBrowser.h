@@ -19,8 +19,13 @@
 
 @property (nonatomic, weak) id<ZKPhotoBrowserDelegate> delegate;
 
-/** 初始化方法, 一定要实现 */
-- (instancetype)initWithPhotos:(NSArray <ZKPhoto *> *)photos currentPhotoIndex:(NSUInteger)index;
+/*!
+ * imageUrls: 大图图片链接
+ * index: 当前点击图片的下标
+ * superView: 盛放当前图片 imageView 视图的父视图
+ *
+ */
+- (instancetype)initWithImageUrls:(NSArray<NSString *> *)imageUrls currentPhotoIndex:(NSUInteger)index sourceSuperView:(UIView *)superView;
 
 - (void)show;
 
