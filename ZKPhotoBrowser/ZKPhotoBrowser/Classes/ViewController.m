@@ -70,12 +70,7 @@
 
 - (void)tapImage:(UITapGestureRecognizer *)tap
 {
-    [self showPhotoBrowserWithTap:tap];
-}
-
-- (void)showPhotoBrowserWithTap:(UITapGestureRecognizer *)tap
-{
-    [ZKPhotoBrowser showWithImageUrls:self.urls currentPhotoIndex:tap.view.tag sourceSuperView:_contentView];
+    [ZKPhotoBrowser showWithImageUrls:self.urls currentPhotoIndex:tap.view.tag sourceSuperView:tap.view.superview];
 }
 
 #pragma mark - Lazy Loading
