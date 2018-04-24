@@ -30,3 +30,18 @@
                   sourceSuperView:(UIView *)superView;
 
 @end
+
+#define MCDisableAutoAdjustScrollViewInsets(scrollView, vc)\
+do { \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"") \
+if (@available(iOS 11.0,*))  {\
+scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;\
+} else {\
+vc.automaticallyAdjustsScrollViewInsets = NO;\
+}\
+_Pragma("clang diagnostic pop")\
+} while (0);
+
+#define MCDisableTableViewEstimatedHeight(tableView) \
+tableView.estimatedRowHeight = tableView.estimatedSectionFooterHeight = tableView.estimatedSectionHeaderHeight = 0;

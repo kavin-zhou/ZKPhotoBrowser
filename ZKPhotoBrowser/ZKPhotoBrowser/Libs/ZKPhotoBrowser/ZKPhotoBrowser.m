@@ -33,8 +33,8 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
 @implementation ZKPhotoBrowser
 
 #pragma mark - Lifecycle
-- (void)loadView
-{
+
+- (void)loadView {
     _statusBarHiddenInited = [UIApplication sharedApplication].isStatusBarHidden;
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     
@@ -102,10 +102,14 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
     _photoScrollView.contentSize = CGSizeMake(frame.size.width * _photos.count, 0);
 	[self.view addSubview:_photoScrollView];
     _photoScrollView.contentOffset = CGPointMake(_currentPhotoIndex * frame.size.width, 0);
+    
+    MCDisableAutoAdjustScrollViewInsets(_photoScrollView, self);
 }
 
 #pragma mark - 公共方法
-- (instancetype)initWithImageUrls:(NSArray<NSString *> *)imageUrls currentPhotoIndex:(NSUInteger)index sourceSuperView:(UIView *)superView {
+- (instancetype)initWithImageUrls:(NSArray<NSString *> *)imageUrls
+                currentPhotoIndex:(NSUInteger)index
+                  sourceSuperView:(UIView *)superView {
     NSInteger count = imageUrls.count;
     NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
     for (int i = 0; i < count; i ++) {

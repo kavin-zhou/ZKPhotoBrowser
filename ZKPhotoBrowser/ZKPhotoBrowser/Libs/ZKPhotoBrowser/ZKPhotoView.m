@@ -63,6 +63,10 @@
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
     longPress.minimumPressDuration = .5;
     [self addGestureRecognizer:longPress];
+    
+    if (@available(iOS 11.0,*))  {
+        self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
 }
 
 #pragma mark - photoSetter

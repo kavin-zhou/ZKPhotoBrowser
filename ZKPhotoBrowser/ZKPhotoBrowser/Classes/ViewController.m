@@ -36,6 +36,8 @@
     
     _contentView = [[UIView alloc] initWithFrame:(CGRect){CGPointZero, scrollView.frame.size}];
     [scrollView addSubview:_contentView];
+    
+    MCDisableAutoAdjustScrollViewInsets(scrollView, self);
 }
 
 - (void)setupUI
