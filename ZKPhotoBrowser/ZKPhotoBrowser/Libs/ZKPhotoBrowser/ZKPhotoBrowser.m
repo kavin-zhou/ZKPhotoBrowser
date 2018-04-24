@@ -7,7 +7,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "ZKPhotoBrowser.h"
-#import "ZKPhoto.h"
 #import "SDWebImageManager+ZK.h"
 #import "ZKPhotoView.h"
 #import "ZKPhotoToolbar.h"
@@ -43,12 +42,9 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
 	self.view.backgroundColor = [UIColor blackColor];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self setupScrollView];
-    
     [self setupToolbar];
 }
 
@@ -60,20 +56,18 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
     return browser;
 }
 
-- (void)show
-{
+- (void)show {
     [KeyWindow addSubview:self.view];
     [KeyWindow.rootViewController addChildViewController:self];
 
     if (_currentPhotoIndex == 0) {
-        [self showPhotos];
+//        [self showPhotos];
     }
 }
 
 #pragma mark - 私有方法
 #pragma mark 创建工具条
-- (void)setupToolbar
-{
+- (void)setupToolbar {
     CGFloat barHeight = 44.f;
     CGFloat barY = self.view.frame.size.height - barHeight;
     _toolbar = [[ZKPhotoToolbar alloc] init];
@@ -86,8 +80,8 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
 }
 
 #pragma mark 创建UIScrollView
-- (void)setupScrollView
-{
+
+- (void)setupScrollView {
     CGRect frame = self.view.bounds;
     frame.origin.x   -= kPadding;
     frame.size.width += (2 * kPadding);
@@ -126,17 +120,15 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
     return [self initWithPhotos:photos currentPhotoIndex:index];
 }
 
-- (instancetype)initWithPhotos:(NSArray <ZKPhoto *> *)photos currentPhotoIndex:(NSUInteger)index
-{
+- (instancetype)initWithPhotos:(NSArray <ZKPhoto *> *)photos
+             currentPhotoIndex:(NSUInteger)index {
     NSEnumerator *subEnum = [KeyWindow.rootViewController.childViewControllers reverseObjectEnumerator];
     for (UIViewController *vc in subEnum) {
         if ([vc isKindOfClass:[self class]]) {
             return nil;
         }
     }
-    
     if (self = [super init]) {
-        
         _photos = photos;
         _currentPhotoIndex = index;
         
@@ -151,19 +143,18 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
             photo.firstShow = i == index;
         }
         
-        if ([self isViewLoaded]) {
-            _photoScrollView.contentOffset = CGPointMake(_currentPhotoIndex * _photoScrollView.frame.size.width, 0);
-            
-            // 显示所有的相片
-            [self showPhotos];
-        }
+//        if ([self isViewLoaded]) {
+//            _photoScrollView.contentOffset = CGPointMake(_currentPhotoIndex * _photoScrollView.frame.size.width, 0);
+//
+//            // 显示所有的相片
+//            [self showPhotos];
+//        }
     }
     return self;
 }
 
 #pragma mark - ZKPhotoView代理
-- (void)photoViewSingleTap:(ZKPhotoView *)photoView
-{
+- (void)photoViewSingleTap:(ZKPhotoView *)photoView {
     [UIApplication sharedApplication].statusBarHidden = _statusBarHiddenInited;
     self.view.backgroundColor = [UIColor clearColor];
     
@@ -171,20 +162,17 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
     [_toolbar removeFromSuperview];
 }
 
-- (void)photoViewDidEndZoom:(ZKPhotoView *)photoView
-{
+- (void)photoViewDidEndZoom:(ZKPhotoView *)photoView {
     [self.view removeFromSuperview];
     [self removeFromParentViewController];
 }
 
-- (void)photoViewImageFinishLoad:(ZKPhotoView *)photoView
-{
+- (void)photoViewImageFinishLoad:(ZKPhotoView *)photoView {
     _toolbar.currentPhotoIndex = _currentPhotoIndex;
 }
 
 #pragma mark 显示照片
-- (void)showPhotos
-{
+- (void)showPhotos {
     // 只有一张图片
     if (_photos.count == 1) {
         [self showPhotoViewAtIndex:0];
@@ -194,10 +182,18 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
     CGRect visibleBounds = _photoScrollView.bounds;
 	NSInteger firstIndex = (int)floorf((CGRectGetMinX(visibleBounds)+kPadding*2) / CGRectGetWidth(visibleBounds));
 	NSInteger lastIndex  = (int)floorf((CGRectGetMaxX(visibleBounds)-kPadding*2-1) / CGRectGetWidth(visibleBounds));
-    if (firstIndex < 0) firstIndex = 0;
-    if (firstIndex >= _photos.count) firstIndex = _photos.count - 1;
-    if (lastIndex < 0) lastIndex = 0;
-    if (lastIndex >= _photos.count) lastIndex = _photos.count - 1;
+    if (firstIndex < 0) {
+        firstIndex = 0;
+    };
+    if (firstIndex >= _photos.count) {
+        firstIndex = _photos.count - 1;
+    };
+    if (lastIndex < 0) {
+        lastIndex = 0;
+    }
+    if (lastIndex >= _photos.count) {
+        lastIndex = _photos.count - 1;
+    }
 	
 	// 回收不再显示的ImageView
     NSInteger photoViewIndex;
@@ -222,8 +218,7 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
 }
 
 #pragma mark 显示一个图片view
-- (void)showPhotoViewAtIndex:(NSUInteger)index
-{
+- (void)showPhotoViewAtIndex:(NSUInteger)index {
     ZKPhotoView *photoView = [self dequeueReusablePhotoView];
     if (!photoView) { // 添加新的图片view
         photoView = [[ZKPhotoView alloc] init];
@@ -248,8 +243,7 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
 }
 
 #pragma mark 加载index附近的图片
-- (void)loadImageNearIndex:(NSUInteger)index
-{
+- (void)loadImageNearIndex:(NSUInteger)index {
     if (index > 0) {
         ZKPhoto *photo = _photos[index - 1];
         [SDWebImageManager downloadWithURL:photo.url];
@@ -272,8 +266,7 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
 }
 
 #pragma mark 循环利用某个view
-- (ZKPhotoView *)dequeueReusablePhotoView
-{
+- (ZKPhotoView *)dequeueReusablePhotoView {
     ZKPhotoView *photoView = [_reusablePhotoViews anyObject];
 	if (photoView) {
 		[_reusablePhotoViews removeObject:photoView];
@@ -282,20 +275,17 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
 }
 
 #pragma mark 更新toolbar状态
-- (void)updateTollbarState
-{
+- (void)updateTollbarState {
     _currentPhotoIndex = _photoScrollView.contentOffset.x / _photoScrollView.frame.size.width+0.5;
     _toolbar.currentPhotoIndex = _currentPhotoIndex;
 }
 
-#pragma mark - UIScrollView Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 	[self showPhotos];
     [self updateTollbarState];
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if ([self.delegate respondsToSelector:@selector(photoBrowser:didChangedToPageAtIndex:)]) {
         [_delegate photoBrowser:self didChangedToPageAtIndex:_currentPhotoIndex];
     }

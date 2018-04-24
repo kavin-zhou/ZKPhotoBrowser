@@ -6,11 +6,9 @@
 //
 
 #import "ZKPhotoView.h"
-#import "ZKPhoto.h"
 #import "ZKPhotoLoadingView.h"
 #import "UIImageView+WebCache.h"
 #import <QuartzCore/QuartzCore.h>
-//#import "USActionSheet.h"
 
 @interface ZKPhotoView ()
 
@@ -22,27 +20,23 @@
 
 @implementation ZKPhotoView
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
         [self setup];
     }
     return self;
 }
 
-- (void)setup
-{
+- (void)setup {
     self.clipsToBounds = YES;
-    // 图片
+
     _imageView = [[UIImageView alloc] init];
     _imageView.contentMode = UIViewContentModeScaleAspectFill;
     _imageView.clipsToBounds = YES;
     [self addSubview:_imageView];
     
-    // 进度条
     _photoLoadingView = [[ZKPhotoLoadingView alloc] init];
     
-    // 属性
     self.backgroundColor = [UIColor clearColor];
     self.delegate = self;
     self.showsHorizontalScrollIndicator = NO;
@@ -50,7 +44,6 @@
     self.decelerationRate = UIScrollViewDecelerationRateFast;
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    // 监听点击
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     singleTap.delaysTouchesBegan = YES;
     singleTap.numberOfTapsRequired = 1;
@@ -70,15 +63,13 @@
 }
 
 #pragma mark - photoSetter
-- (void)setPhoto:(ZKPhoto *)photo
-{
+- (void)setPhoto:(ZKPhoto *)photo {
     _photo = photo;
     [self showImage];
 }
 
 #pragma mark 显示图片
-- (void)showImage
-{
+- (void)showImage {
     if (_photo.firstShow) { // 首次显示
         _imageView.image = _photo.placeholder; // 占位图片
         _photo.srcImageView.image = nil;
@@ -105,12 +96,12 @@
 }
 
 #pragma mark 开始加载图片
-- (void)photoStartLoad
-{
+- (void)photoStartLoad {
     if (_photo.image) {
         self.scrollEnabled = YES;
         _imageView.image = _photo.image;
-    } else {
+    }
+    else {
         self.scrollEnabled = NO;
         // 直接显示进度条
         [_photoLoadingView showLoading];
@@ -129,8 +120,7 @@
 }
 
 #pragma mark 加载完毕
-- (void)photoDidFinishLoadWithImage:(UIImage *)image
-{
+- (void)photoDidFinishLoadWithImage:(UIImage *)image {
     if (image) {
         self.scrollEnabled = YES;
         _photo.image = image;
@@ -148,9 +138,10 @@
     [self adjustFrame];
 }
 #pragma mark 调整frame
-- (void)adjustFrame
-{
-	if (_imageView.image == nil) return;
+- (void)adjustFrame {
+    if (_imageView.image == nil) {
+        return;
+    };
     
     // 基本尺寸参数
     CGSize boundsSize = self.bounds.size;
@@ -194,9 +185,7 @@
               initialSpringVelocity:0
                             options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseOut
                          animations:^{
-                             
                              _imageView.frame = imageFrame;
-                             
                          } completion:^(BOOL finished) {
                              // 设置底部的小图片
                              _photo.srcImageView.image = _photo.placeholder;
@@ -209,28 +198,25 @@
 }
 
 #pragma mark - UIScrollViewDelegate
-- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
-{
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
 	return _imageView;
 }
 
-/** 缩放后调整视图位置 */
-- (void)scrollViewDidZoom:(UIScrollView *)scrollView
-{
-    UIImageView *zoomView = [[scrollView subviews] firstObject];
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
     CGFloat offsetX = (scrollView.bounds.size.width > scrollView.contentSize.width) ? (scrollView.bounds.size.width - scrollView.contentSize.width)/2 : 0.0;
     CGFloat offsetY = (scrollView.bounds.size.height > scrollView.contentSize.height) ? (scrollView.bounds.size.height - scrollView.contentSize.height)/2 : 0.0;
-    zoomView.center = CGPointMake(scrollView.contentSize.width/2 + offsetX, scrollView.contentSize.height/2 + offsetY);
+    _imageView.center = CGPointMake(scrollView.contentSize.width/2 + offsetX, scrollView.contentSize.height/2 + offsetY);
 }
 
-#pragma mark - 手势处理
+#pragma mark - Gesture
+
 - (void)handleSingleTap:(UITapGestureRecognizer *)tap {
     _doubleTap = NO;
     [self performSelector:@selector(hide) withObject:nil afterDelay:0.2];
 }
 
-- (void)hide
-{
+- (void)hide {
     if (_doubleTap) return;
     
     // 移除进度条
@@ -240,9 +226,6 @@
     _photo.srcImageView.image = nil;
     
     NSTimeInterval duration = 0.15;
-//    if (_photo.srcImageView.clipsToBounds) {
-//        [self performSelector:@selector(reset) withObject:nil afterDelay:duration];
-//    }
     
     // 通知代理
     if ([self.photoViewDelegate respondsToSelector:@selector(photoViewSingleTap:)]) {
@@ -271,12 +254,6 @@
     }];
 }
 
-//- (void)reset
-//{
-//    _imageView.image = _photo.capture;
-//    _imageView.contentMode = UIViewContentModeScaleToFill;
-//}
-
 - (void)handleDoubleTap:(UITapGestureRecognizer *)tap {
     _doubleTap = YES;
     
@@ -290,8 +267,7 @@
 }
 
 /** 根据手指位置计算zoomRect */
-- (CGRect)zoomRectForScale:(CGFloat)scale withCenter:(CGPoint)touchPoint
-{
+- (CGRect)zoomRectForScale:(CGFloat)scale withCenter:(CGPoint)touchPoint {
     CGRect zoomRect;
     
     zoomRect.size.height =  _imageView.frame.size.height / scale;;
@@ -316,8 +292,7 @@
 //    }];
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     // 取消请求
     [_imageView sd_setImageWithURL:[NSURL URLWithString:@"file:///abc"]];
 }

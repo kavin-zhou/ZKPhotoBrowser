@@ -6,7 +6,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ZKPhotoBrowser, ZKPhoto, ZKPhotoView;
+#import "ZKPhoto.h"
+@class ZKPhotoBrowser, ZKPhotoView;
 
 @protocol ZKPhotoViewDelegate <NSObject>
 
