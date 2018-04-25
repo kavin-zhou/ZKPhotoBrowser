@@ -11,6 +11,6 @@
 @interface ZKPhotoToolbar : UIView
 
 @property (nonatomic, strong) NSArray <ZKPhoto *> *photos;           //!< 所有的图片对象
-@property (nonatomic, assign) NSUInteger currentPhotoIndex; //!< 当前展示的图片索引
+@property (nonatomic, assign) NSUInteger currentPhotoIndex;          //!< 当前展示的图片索引
 
 @end

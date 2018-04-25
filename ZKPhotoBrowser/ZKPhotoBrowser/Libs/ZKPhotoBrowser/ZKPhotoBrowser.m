@@ -7,12 +7,14 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "ZKPhotoBrowser.h"
-#import "SDWebImageManager+ZK.h"
 #import "ZKPhotoView.h"
 #import "ZKPhotoToolbar.h"
 
 #define PhotoViewIndex(photoView)   ([photoView tag] - kPhotoViewTagOffset)
+
+#ifndef KeyWindow
 #define KeyWindow                    [UIApplication sharedApplication].keyWindow
+#endif
 
 @interface ZKPhotoBrowser () <ZKPhotoViewDelegate>
 
@@ -23,6 +25,7 @@
 @property (nonatomic, assign) BOOL statusBarHiddenInited; //!< 一开始的状态栏
 @property (nonatomic, strong) NSArray <ZKPhoto *> *photos;//!< 存放所有图片
 @property (nonatomic, assign) NSUInteger          currentPhotoIndex;//!< 当前展示的图片索引
+@property (nonatomic, strong) NSArray *allImageViews;
 
 @end
 
@@ -61,7 +64,7 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
     [KeyWindow.rootViewController addChildViewController:self];
 
     if (_currentPhotoIndex == 0) {
-//        [self showPhotos];
+        [self showPhotos];
     }
 }
 
@@ -69,10 +72,9 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
 #pragma mark 创建工具条
 - (void)setupToolbar {
     CGFloat barHeight = 44.f;
-    CGFloat barY = self.view.frame.size.height - barHeight;
+    CGFloat barY = 10.f;
     _toolbar = [[ZKPhotoToolbar alloc] init];
     _toolbar.frame = CGRectMake(0, barY, self.view.frame.size.width, barHeight);
-    _toolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     _toolbar.photos = _photos;
     [self.view addSubview:_toolbar];
     
@@ -103,18 +105,22 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
 #pragma mark - 公共方法
 - (instancetype)initWithImageUrls:(NSArray<NSString *> *)imageUrls
                 currentPhotoIndex:(NSUInteger)index
-                  sourceSuperView:(UIView *)superView {
+                  sourceSuperView:(UIView *)superview {
     NSInteger count = imageUrls.count;
     NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
+    _allImageViews = [NSArray array];
+    
+    NSMutableArray *tempViews = [NSMutableArray array];
+    [self traverseAllSubviewsWithSuperview:superview enumCallback:^(UIView *view) {
+        [tempViews addObject:view];
+    }];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class == %@ && accessibilityValue == %@", [UIImageView class], NSStringFromClass([self class])];
+    _allImageViews = [tempViews filteredArrayUsingPredicate:predicate];
+    
     for (int i = 0; i < count; i ++) {
         ZKPhoto *photo = [[ZKPhoto alloc] init];
         photo.url = [NSURL URLWithString:imageUrls[i]];
-        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"class == %@", [UIImageView class]];
-        NSArray *tempArray = [[NSArray alloc] init];
-        tempArray = [superView.subviews filteredArrayUsingPredicate:predicate];
-        
-        photo.srcImageView = tempArray[i];
+        photo.srcImageView = _allImageViews[i];
         [photos addObject:photo];
     }
     return [self initWithPhotos:photos currentPhotoIndex:index];
@@ -142,13 +148,6 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
             photo.index = i;
             photo.firstShow = i == index;
         }
-        
-//        if ([self isViewLoaded]) {
-//            _photoScrollView.contentOffset = CGPointMake(_currentPhotoIndex * _photoScrollView.frame.size.width, 0);
-//
-//            // 显示所有的相片
-//            [self showPhotos];
-//        }
     }
     return self;
 }
@@ -246,12 +245,12 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
 - (void)loadImageNearIndex:(NSUInteger)index {
     if (index > 0) {
         ZKPhoto *photo = _photos[index - 1];
-        [SDWebImageManager downloadWithURL:photo.url];
+        [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:@[ photo.url ]];
     }
     
     if (index < _photos.count - 1) {
         ZKPhoto *photo = _photos[index + 1];
-        [SDWebImageManager downloadWithURL:photo.url];
+        [[SDWebImagePrefetcher sharedImagePrefetcher] prefetchURLs:@[ photo.url ]];
     }
 }
 
@@ -288,6 +287,15 @@ static CGFloat const kPhotoViewTagOffset = 1000.f;
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if ([self.delegate respondsToSelector:@selector(photoBrowser:didChangedToPageAtIndex:)]) {
         [_delegate photoBrowser:self didChangedToPageAtIndex:_currentPhotoIndex];
+    }
+}
+
+- (void)traverseAllSubviewsWithSuperview:(UIView *)superview enumCallback:(void(^)(UIView *view))enumCallback {
+    for (UIView *subview in superview.subviews) {
+        if ([subview.subviews count]) {
+            [self traverseAllSubviewsWithSuperview:subview enumCallback:enumCallback];
+        }
+        !enumCallback ?: enumCallback(subview);
     }
 }
 

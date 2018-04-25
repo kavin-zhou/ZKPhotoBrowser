@@ -35,11 +35,12 @@
     
     // 保存图片按钮
     CGFloat btnWidth = self.bounds.size.height;
-    _saveImageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _saveImageBtn.frame = CGRectMake(20, 0, btnWidth, btnWidth);
-    [_saveImageBtn setImage:[UIImage imageNamed:@"ZKPhotoBrowser.bundle/save_icon.png"] forState:UIControlStateNormal];
-    [_saveImageBtn setImage:[UIImage imageNamed:@"ZKPhotoBrowser.bundle/save_icon_highlighted.png"] forState:UIControlStateHighlighted];
+    _saveImageBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    _saveImageBtn.frame = CGRectMake(CGRectGetMaxX(self.frame) - btnWidth, 0, btnWidth, btnWidth);
     [_saveImageBtn addTarget:self action:@selector(saveImage) forControlEvents:UIControlEventTouchUpInside];
+    [_saveImageBtn setTitle:@"保存" forState:UIControlStateNormal];
+    _saveImageBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
+    [_saveImageBtn setTitleColor:HexColor(0xffffff) forState:UIControlStateNormal];
     [self addSubview:_saveImageBtn];
 }
 

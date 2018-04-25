@@ -109,11 +109,11 @@
         
         __weak ZKPhotoView *photoView = self;
         __weak ZKPhotoLoadingView *loading = _photoLoadingView;
-        [_imageView sd_setImageWithURL:_photo.url placeholderImage:_photo.placeholder options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        [_imageView sd_setImageWithURL:_photo.url placeholderImage:_photo.placeholder options:SDWebImageRetryFailed | SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
             if (receivedSize > kMinProgress) {
                 loading.progress = (float)receivedSize/expectedSize;
             }
-        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        } completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             [photoView photoDidFinishLoadWithImage:image];
         }];
     }
