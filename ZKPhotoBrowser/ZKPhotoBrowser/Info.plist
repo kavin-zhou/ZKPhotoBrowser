@@ -27,6 +27,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>写入图库</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>申请访问相册权限</string>
 	<key>UILaunchStoryboardName</key>
